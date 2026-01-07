@@ -1,6 +1,6 @@
-Here is the updated and professional README for your project, titled SMART DOOR. This version is written in English, includes clear headings, and contains no emojis, as requested.
 
-SMART DOOR: Intelligent Guest Recognition for the Visually Impaired
+
+**SMART DOOR**: Intelligent Guest Recognition for the Visually Impaired
 SMART DOOR is an assistive technology project designed to provide independence and security for individuals with visual impairments. By combining Computer Vision and Artificial Intelligence, the system identifies visitors at the door and provides immediate audio feedback, allowing users to identify guests without visual contact.
 
 **Project Overview**
