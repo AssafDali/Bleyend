@@ -93,27 +93,30 @@ try:
                     name = known_face_names[best_match_index]  
 
             now = time.time() # Get current timestamp for notification management
-            # לוגיקת הודעות חכמה ושקטה בטרמינל
+            # notification sending
             if name == "Unknown":
                 unknown_counter += 1
-                # שולח הודעה רק אם זוהה Unknown ב-3 פריימים רצופים (סינון רעשים)
+                # strict alert for strangers, message if the person is there for 3+ frames and 30s passed since last unknow message
                 if unknown_counter >= 3 and (now - last_notified_time.get("Unknown", 0) > 30):
-                    print(f">>> [אירוע] אדם לא מוכר זוהה (מרחק: {best_dist:.4f})")
+                    # event allow assaf and loren be different notification, and not having spam notification for each person
+                    print(f">>> [EVENT] Unknown person detected (Distance: {best_dist:.4f})")
                     send_telegram_to_all("Unknown Person Outside")
+                    # Update timestamp to start the cooldown
                     last_notified_time["Unknown"] = now
             else:
+                # Reset stranger counter if a known face is identified
                 unknown_counter = 0
-                # שליחה פעם בדקה לאדם מוכר
+                # Send notification for known faces every 60 seconds
                 if now - last_notified_time.get(name, 0) > 60:
-                    print(f">>> [אירוע] {name} זוהה/תה בדלת (מרחק: {best_dist:.4f})")
-                    send_telegram_to_all(f"{name} Is םutside The Door")
+                    print(f">>> [EVENT] {name} detected at the door (Distance: {best_dist:.4f})")
+                    send_telegram_to_all(f"{name} Is Outside The Door")
                     last_notified_time[name] = now
-
-        # הצגת התמונה
+        # allow the user see what the camera sees 
         cv2.imshow('Smart Doorbell - Live', frame_bgr)
+        # Listen for the 'q' key press for 1ms to break the loop
         if cv2.waitKey(1) & 0xFF == ord('q'): break
 
 finally:
-    picam2.stop()
-    cv2.destroyAllWindows()
-    print("המערכת נסגרה.")
+    picam2.stop()# Power down the camera sensor and stop the video stream
+    cv2.destroyAllWindows()# Close all and free associated memory
+    print("System shut down successfully.")
