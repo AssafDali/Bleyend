@@ -7,6 +7,6 @@ To recognize a new person, simply place a clear photo of them in the `known_peop
 
 ### 2. Execution
 Run the system using the following command:
-* cd Documents/smart_door *
-* source env/bin/activate *
-* python smart_door.py*
+* cd Documents/smart_door 
+* source env/bin/activate 
+* python smart_door.py
