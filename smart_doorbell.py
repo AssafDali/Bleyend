@@ -7,11 +7,11 @@ import requests
 import time
 import threading
 
-# --- Project Configuration ---
-# Group Members: [Add Names Here]
+
+# Group Members: Assaf Dali, Loren Kricheli
 # Course: Robotics for Computer Science, HIT
 
-# Telegram API Setup - Used to send real-time alerts to the user [cite: 14]
+# Telegram API Setup - Used to send real-time alerts to the user 
 TELEGRAM_TOKEN = "8505473880:AAEqXQ_H_VRR1iZXI-rMeNzvSQoftgjGhy8"
 CHAT_IDS = ["7125165791", "6484314043"] 
 
@@ -38,7 +38,7 @@ def send_telegram_to_all(text):
         thread = threading.Thread(target=send_msg_worker, args=(chat_id, text))
         thread.start()
 
-# --- Loading Database of Known Faces ---
+#Loading Database of Known Faces
 known_face_encodings = []
 known_face_names = [] 
 path = "known_people"
@@ -56,7 +56,7 @@ for filename in os.listdir(path):
             known_face_encodings.append(encodings[0])
             known_face_names.append(os.path.splitext(filename)[0])
 
-# --- Camera Hardware Initialization (Raspberry Pi 5) ---
+#Camera Hardware Initialization (Raspberry Pi 5)
 picam2 = Picamera2() 
 config = picam2.create_video_configuration() 
 config['main']['size'] = (640, 480) # Resolution balance between clarity and speed
@@ -64,7 +64,7 @@ config['main']['format'] = 'BGR888'
 picam2.configure(config)
 picam2.start()
 
-# State Management variables
+#State Management variables
 last_notified_time = {} # Manages "cooldown" periods to prevent notification spam
 unknown_counter = 0     # Filters noise to confirm a stranger is actually present
 
@@ -107,7 +107,7 @@ try:
 
             now = time.time()
             
-            # --- Notification Logic ---
+            # Notification Logic
             if name == "Unknown":
                 unknown_counter += 1
                 # Alert for strangers only after 3 consecutive frames (to avoid false positives)
